@@ -1,15 +1,14 @@
 #include<stdio.h>
 #define Max_Vertices 20
 #define Max_length 20
-// Tao cau truc do thi: Mang 2 chieu de luu duoi dang ma tran, bien n de luu so luong dinh
-typedef struct {
-    int data[Max_length];
-    int size;
-}List;
 typedef struct {
     int A[Max_Vertices][Max_Vertices];
     int n;
 }Graph;
+typedef struct {
+    int data[Max_length];
+    int size;
+}List;
 // Ham khoi tao do thi
 void init_Graph(Graph *G, int n){
     int i,j;
@@ -27,23 +26,23 @@ void add_edge(Graph *G, int x, int y){
 }
 // Ham tinh bac cua dinh
 int degree(Graph *G, int x){
-    int i,j,deg=0;
+    int i,deg=0;
     for(i=1; i<=G->n; i++){
         if(G->A[i][x]==1) deg++;
     }
     return deg;
 }
-// Ham khoi tao list L de luu gia tri lang gieng
+// khoi tao list de luu dinh lang gieng
 void make_nullList(List *L){
     L->size=0;
 }
-// Ham them dinh lang gieng vao x
+// them dinh lang gieng x vao list
 void push_back(List *L, int x){
     L->data[L->size]=x;
     L->size++;
 }
-// Ham luu cac dinh lang gieng cua x vao list
-List neighbor(Graph *G, int x){
+// tra ve 1 list cac dinh lang gieng cua dinh x
+List neightbor(Graph *G, int x){
     int i;
     List L;
     make_nullList(&L);
@@ -52,26 +51,36 @@ List neighbor(Graph *G, int x){
     }
     return L;
 }
+// lay dinh tai vi tri i
+int element_at(List *L, int i){
+    return L->data[i-1];
+}
 int main(){
     Graph G;
-    int n,m,i,j,e,u,v;
     FILE *file = freopen("D:\\Code\\CodeBlock\\GraphTheory-CT175\\VoTriThuc\\input.txt","r",stdin);
+    int n,m,u,v,i,j;
     scanf("%d%d",&n,&m);
     init_Graph(&G,n);
-    //Them cung vao do thi
-    for(e=1; e<=m; e++){
+    // them cac cung vao do thi G
+    for(i=1; i<=m; i++){
         scanf("%d%d",&u,&v);
         add_edge(&G,u,v);
     }
-    // in ra lang gieng cua cac dinh trong do thi
+    // in don do thi duoi dang ma tran dinh dinh
     for(i=1; i<=G.n; i++){
-        List L = neighbor(&G,i);
-            printf("Neightbor(%d) =",i);
-        for(j=0; j<L.size; j++){
-            printf(" %d",L.data[j]);
+        for(j=1; j<=G.n; j++){
+            printf("%d",G.A[i][j]);
+        }
+        printf("\n");
+    }
+    // in cac dinh lang giang cua tung dinh trong do thi
+    for(i=1; i<=G.n; i++){
+        List L = neightbor(&G, i);
+        printf("Neighbor(%d):",i);
+        for(j=1; j<=L.size; j++){
+            printf(" %d",element_at(&L,j));
         }
         printf("\n");
     }
     fclose(file);
-
 }
