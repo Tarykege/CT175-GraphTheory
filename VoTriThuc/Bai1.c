@@ -61,7 +61,7 @@ int element_at(List *L, int i){
 }
 int main(){
     Graph G;
-    FILE *file = freopen("D:\\Code\\CodeBlock\\GraphTheory-CT175\\VoTriThuc\\input.txt","r",stdin);
+    FILE *file = freopen("input.txt","r",stdin);
     int n,m,u,v,i,j;
     scanf("%d%d",&n,&m);
     init_Graph(&G,n);
@@ -75,14 +75,14 @@ int main(){
     // in don do thi duoi dang ma tran dinh dinh
     for(i=1; i<=G.n; i++){
         for(j=1; j<=G.n; j++){
-            printf("%d",G.A[i][j]);
+            printf("%d ",G.A[i][j]);
         }
         printf("\n");
     }
 
     // in cac dinh lang giang cua tung dinh trong do thi
     for(i=1; i<=G.n; i++){
-        List L = neightbor(&G, i);
+        List L = neightbors(&G, i);
         printf("Neighbor(%d):",i);
         for(j=1; j<=L.size; j++){
             printf(" %d",element_at(&L,j));
