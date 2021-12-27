@@ -7,6 +7,14 @@
 *.obj
 *.elf
 
+# project files
+*.dev
+*.layout
+*.win
+
+# notepad++
+*.bak
+
 # Linker output
 *.ilk
 *.map
