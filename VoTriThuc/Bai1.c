@@ -24,11 +24,15 @@ void add_edge(Graph *G, int x, int y){
     G->A[x][y]=1;
     G->A[y][x]=1;
 }
+// Ham kiem tra lang gieng
+int adjacent(Graph *G, int x, int y){
+    return (G->A[x][y]!=0);
+}
 // Ham tinh bac cua dinh
 int degree(Graph *G, int x){
     int i,deg=0;
     for(i=1; i<=G->n; i++){
-        if(G->A[i][x]==1) deg++;
+        if(G->A[i][x]==1) deg++; //adjacent(G,i,x)
     }
     return deg;
 }
@@ -47,7 +51,7 @@ List neightbor(Graph *G, int x){
     List L;
     make_nullList(&L);
     for(i=1; i<=G->n; i++){
-        if(G->A[i][x]==1) push_back(&L,i);
+        if(G->A[i][x]) push_back(&L,i); //adjacent(G,i,x)
     }
     return L;
 }
@@ -61,11 +65,13 @@ int main(){
     int n,m,u,v,i,j;
     scanf("%d%d",&n,&m);
     init_Graph(&G,n);
+
     // them cac cung vao do thi G
     for(i=1; i<=m; i++){
         scanf("%d%d",&u,&v);
         add_edge(&G,u,v);
     }
+
     // in don do thi duoi dang ma tran dinh dinh
     for(i=1; i<=G.n; i++){
         for(j=1; j<=G.n; j++){
@@ -73,6 +79,7 @@ int main(){
         }
         printf("\n");
     }
+
     // in cac dinh lang giang cua tung dinh trong do thi
     for(i=1; i<=G.n; i++){
         List L = neightbor(&G, i);
@@ -82,5 +89,6 @@ int main(){
         }
         printf("\n");
     }
+
     fclose(file);
 }
