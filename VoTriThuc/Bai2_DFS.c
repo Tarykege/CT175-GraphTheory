@@ -46,7 +46,7 @@ void push_back(List *L, int x){
     L->size++;
 }
 // tra ve 1 list cac dinh lang gieng cua dinh x
-List neightbors(Graph *G, int x){
+List neightbor(Graph *G, int x){
     int i;
     List L;
     make_nullList(&L);

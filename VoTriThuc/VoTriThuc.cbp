@@ -33,6 +33,11 @@
 		</Compiler>
 		<Unit filename="Bai1.c">
 			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Bai2_DFS.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
