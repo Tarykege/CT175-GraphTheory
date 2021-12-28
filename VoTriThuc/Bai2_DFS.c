@@ -1,6 +1,7 @@
 #include<stdio.h>
 #define Max_Vertices 20
 #define Max_length 20
+#define Max_Element 40
 typedef struct {
     int A[Max_Vertices][Max_Vertices];
     int n;
@@ -9,6 +10,11 @@ typedef struct {
     int data[Max_length];
     int size;
 }List;
+typedef struct {
+    int data[Max_Element];
+    int size;
+}Stack;
+// -------------GRAPH------------------ //
 // Ham khoi tao do thi
 void init_Graph(Graph *G, int n){
     int i,j;
@@ -36,6 +42,7 @@ int degree(Graph *G, int x){
     }
     return deg;
 }
+// -------------LIST------------------ //
 // khoi tao list de luu dinh lang gieng
 void make_nullList(List *L){
     L->size=0;
@@ -59,36 +66,84 @@ List neightbors(Graph *G, int x){
 int element_at(List *L, int i){
     return L->data[i-1];
 }
+// -------------STACK------------------ //
+// khoi tao stack
+void make_nullStack(Stack *S){
+    S->size=Max_Element;
+}
+// kiem tra stack rong
+int empty_stack(Stack *S){
+    return S->size==Max_Element;
+}
+// them phan tu vao stack
+void push(Stack *S, int x){
+    if(S->size!=0){
+        S->size--;
+        S->data[S->size]=x;
+    }
+}
+// lay phan tu ra khoi stack
+void pop(Stack *S){
+    if(!empty_stack(S)){
+        S->size++;
+    }
+}
+// lay gia tri phan tu trong stack
+int top(Stack *S){
+    return S->data[S->size];
+}
+// duyet do thi dinh x theo chieu sau
+List depth_first_search(Graph *G, int x){
+    List list_dfs; // luu cac dinh duoc duyet tu dinh x
+    make_nullList(&list_dfs);
+    Stack S;
+    int u,i;
+    make_nullStack(&S);
+    push(&S,x);
+    // tao list de danh dau dinh duoc duyet
+    int mark[Max_Vertices]; //do dai cua mark == so luong dinh
+    for(i=1; i<G->n; i++){//khoi tao cac dinh la chua danh dau
+        mark[i]=0;
+    }
+    // thuc hien duyet do thi
+    while(!empty_stack(&S)){
+        u=top(&S);
+        pop(&S);
+        if(mark[u]==1) continue;
+        mark[u]=1;
+        push_back(&list_dfs,u);
+        List u_neightbors=neightbors(G,u); //luu list cac phan tu lang gieng cua u
+        for(i=1; i<=u_neightbors.size; i++){
+            int v = element_at(&u_neightbors,i);
+            if(mark[v]==0) push(&S,v);
+        }
+    }
+    return list_dfs;
+}
 int main(){
-    Graph G;
     FILE *file = freopen("input2.txt","r",stdin);
     int n,m,u,v,i,j;
     scanf("%d%d",&n,&m);
+    // khoi tao do thi
+    Graph G;
     init_Graph(&G,n);
-
-    // them cac cung vao do thi G
     for(i=1; i<=m; i++){
         scanf("%d%d",&u,&v);
         add_edge(&G,u,v);
     }
-
-    // in don do thi duoi dang ma tran dinh dinh
-    for(i=1; i<=G.n; i++){
-        for(j=1; j<=G.n; j++){
-            printf("%d ",G.A[i][j]);
-        }
-        printf("\n");
+    // tao list luu tat ca cac dinh duoc danh dau chua
+    List mark_dfs;
+    for(i=1; i<G.n; i++){
+        mark_dfs.data[i]=0;
     }
-
-    // in cac dinh lang giang cua tung dinh trong do thi
-    for(i=1; i<=G.n; i++){
-        List L = neightbors(&G, i);
-        printf("Neighbor(%d):",i);
-        for(j=1; j<=L.size; j++){
-            printf(" %d",element_at(&L,j));
+    //Duyet tat ca cac dinh ke ca dinh chua duoc danh dau
+    for(i = 1; i<G.n; i++){
+        if(mark_dfs.data[i]==0){
+            List list_v = depth_first_search(&G,i);
+            for(j=1; j<=list_v.size; j++){
+                printf("Duyet %d\n",list_v.data[j-1]);
+                mark_dfs.data[j]=1;
+            }
         }
-        printf("\n");
     }
-
-    fclose(file);
 }

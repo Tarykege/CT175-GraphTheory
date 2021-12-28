@@ -60,7 +60,21 @@ While (stack != empty){
 		if(v chưa được duyệt) đưa vào stack
 }
 ```
+### day 4 (28/12/2021)
+- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS) - Phần 2/6](https://youtu.be/hBXzdzpTPeA?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+### Lý thuyết
+```
+- Dùng stack để duyệt
+- Dùng list để lưu các đỉnh được duyệt
+```
 ### Hàm
 ```
-
+	typdef struct{int data[MAX_LENGTH]; int size;}Stack;
+	void make_nullStack(Stack *S): khởi tạo stack
+	int empty_stack(Stack *S): kiểm tra stack rỗng
+	void push_stack(Stack *stack, int x): thêm phần tử vào stack
+	int top(Stack *S): lấy giá trị phần tử trong stack
+	void pop(Stack *S): xóa phần tử trong stack
+	void depth_first_search(Graph *G): duyệt đồ thị theo chiều sâu
+		int mark[MAX_VERTICES]: đánh dấu, lưu các đỉnh được duyệt
 ```
