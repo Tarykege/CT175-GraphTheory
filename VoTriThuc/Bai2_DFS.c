@@ -102,7 +102,7 @@ List depth_first_search(Graph *G, int x){
     push(&S,x);
     // tao list de danh dau dinh duoc duyet
     int mark[Max_Vertices]; //do dai cua mark == so luong dinh
-    for(i=1; i<G->n; i++){//khoi tao cac dinh la chua danh dau
+    for(i=1; i<=G->n; i++){//khoi tao cac dinh la chua danh dau
         mark[i]=0;
     }
     // thuc hien duyet do thi
@@ -132,18 +132,19 @@ int main(){
         add_edge(&G,u,v);
     }
     // tao list luu tat ca cac dinh duoc danh dau chua
-    List mark_dfs;
-    for(i=1; i<G.n; i++){
-        mark_dfs.data[i]=0;
+    int mark_dfs[Max_Vertices];
+    for(i=1; i<=G.n; i++){
+        mark_dfs[i]=0;
     }
     //Duyet tat ca cac dinh ke ca dinh chua duoc danh dau
-    for(i = 1; i<G.n; i++){
-        if(mark_dfs.data[i]==0){
+    for(i = 1; i<=G.n; i++){
+        if(mark_dfs[i]==0){
             List list_v = depth_first_search(&G,i);
             for(j=1; j<=list_v.size; j++){
-                printf("Duyet %d\n",list_v.data[j-1]);
-                mark_dfs.data[j]=1;
+                printf("%d\n",list_v.data[j-1]);
+                mark_dfs[list_v.data[j-1]]=1;
             }
         }
     }
+    fclose(file);
 }
