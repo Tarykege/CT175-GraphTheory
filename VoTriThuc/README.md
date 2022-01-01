@@ -245,9 +245,9 @@ void DFS_Recursion(Graph *G, int u, int p){
 }
 
 // duyet do thi khong lien thong
-	for(i=1; i<=G.n; i++){
-			if(mark[i]==0){
-				DFS_Recursion(&G,i,0);
-			}
-	}
+for(i=1; i<=G.n; i++){
+		if(mark[i]==0){
+			DFS_Recursion(&G,i,0);
+		}
+}
 ```
