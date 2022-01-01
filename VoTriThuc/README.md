@@ -204,7 +204,7 @@ int main(){
 }
 ```
 
-### day 5 (1/1/2022)
+### day 6 (1/1/2022)
 - [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS - recursion) - Phần 4/6](https://youtu.be/5ACSZdTyziM?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
 ### Lý thuyết
 ```
