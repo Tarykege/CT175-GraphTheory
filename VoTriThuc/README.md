@@ -132,7 +132,7 @@ List depth_first_search(Graph *G, int x){
 ```
 ### Hàm
 ```
-	void depth_first_search(Graph *G, int x, int parent[]): duyệt đồ thị theo chiều sâu
+- void depth_first_search(Graph *G, int x, int parent[]): duyệt đồ thị theo chiều sâu
 ```
 ### Important Code
 ```
