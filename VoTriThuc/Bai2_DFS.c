@@ -43,17 +43,17 @@ int degree(Graph *G, int x){
     return deg;
 }
 // -------------LIST------------------ //
-// khoi tao list de luu dinh lang gieng
+// Khoi tao list de luu dinh lang gieng
 void make_nullList(List *L){
     L->size=0;
 }
-// them dinh lang gieng x vao list
+// Them dinh lang gieng x vao list
 void push_back(List *L, int x){
     L->data[L->size]=x;
     L->size++;
 }
-// tra ve 1 list cac dinh lang gieng cua dinh x
-List neightbors(Graph *G, int x){
+// Tra ve 1 list cac dinh lang gieng cua dinh x
+List neighbors(Graph *G, int x){
     int i;
     List L;
     make_nullList(&L);
@@ -62,65 +62,65 @@ List neightbors(Graph *G, int x){
     }
     return L;
 }
-// lay dinh tai vi tri i
+// Lay dinh tai vi tri i
 int element_at(List *L, int i){
     return L->data[i-1];
 }
 // -------------STACK------------------ //
-// khoi tao stack
+// Khoi tao stack
 void make_nullStack(Stack *S){
     S->size=Max_Element;
 }
-// kiem tra stack rong
+// Kiem tra stack rong
 int empty_stack(Stack *S){
     return S->size==Max_Element;
 }
-// them phan tu vao stack
+// Them phan tu vao stack
 void push(Stack *S, int x){
     if(S->size!=0){
         S->size--;
         S->data[S->size]=x;
     }
 }
-// lay phan tu ra khoi stack
+// Lay phan tu ra khoi stack
 void pop(Stack *S){
     if(!empty_stack(S)){
         S->size++;
     }
 }
-// lay gia tri phan tu trong stack
+// Lay gia tri phan tu trong stack
 int top(Stack *S){
     return S->data[S->size];
 }
-// duyet do thi dinh x theo chieu sau
+// Duyet do thi dinh x theo chieu sau
 List depth_first_search(Graph *G, int x, int parent[]){
-    List list_dfs; // luu cac dinh duoc duyet tu dinh x
+    // danh sach luu cac dinh duoc duyet tu cua dinh x
+	List list_dfs; 
     make_nullList(&list_dfs);
     Stack S;
     int u,i;
     make_nullStack(&S);
     push(&S,x);
     parent[x]=0;
-    // tao list de danh dau dinh duoc duyet
-    int mark[Max_Vertices]; //do dai cua mark == so luong dinh
-    for(i=1; i<=G->n; i++){//khoi tao cac dinh la chua danh dau
+    // Tao list de danh dau dinh duoc duyet
+    int mark[Max_Vertices]; // do dai cua mark == so luong dinh
+    for(i=1; i<=G->n; i++){ // khoi tao cac dinh la chua danh dau
         mark[i]=0;
     }
-    // thuc hien duyet do thi
+    // Thuc hien duyet do thi
     while(!empty_stack(&S)){
         u=top(&S);
         pop(&S);
         if(mark[u]==1) continue;
         mark[u]=1;
         push_back(&list_dfs,u);
-        List u_neightbors=neightbors(G,u); //luu list cac phan tu lang gieng cua u
-        for(i=1; i<=u_neightbors.size; i++){
-            int v = element_at(&u_neightbors,i);
+        List u_neighbors=neighbors(G,u); //Luu list cac phan tu lang gieng cua u
+        for(i=1; i<=u_neighbors.size; i++){
+            int v = element_at(&u_neighbors,i);
             if(mark[v]==0){
             	parent[v]=u;
             	push(&S,v);
 			}
-            
         }
     }
     return list_dfs;
@@ -129,14 +129,14 @@ int main(){
     FILE *file = freopen("input2.txt","r",stdin);
     int n,m,u,v,i,j;
     scanf("%d%d",&n,&m);
-    // khoi tao do thi
+    // Khoi tao do thi
     Graph G;
     init_Graph(&G,n);
     for(i=1; i<=m; i++){
         scanf("%d%d",&u,&v);
         add_edge(&G,u,v);
     }
-    // tao list luu tat ca cac dinh duoc danh dau chua
+    // Tao list luu tat ca cac dinh duoc danh dau chua
     int mark_dfs[Max_Vertices];
     int parent[Max_Vertices];
     for(i=1; i<=G.n; i++){
@@ -144,7 +144,7 @@ int main(){
         parent[i]=0;
     }
     
-    //Duyet tat ca cac dinh ke ca dinh chua duoc danh dau
+    // Duyet do thi khong lien thong
     for(i=1; i<=G.n; i++){
         if(mark_dfs[i]==0){
             List list_v = depth_first_search(&G,i,parent);
@@ -153,6 +153,7 @@ int main(){
             }
         }
     }
+    // In cac dinh va parent tuong ung cua do thi
     for(i=1; i<=G.n; i++){
         printf("%d %d\n",i,parent[i]);
     }

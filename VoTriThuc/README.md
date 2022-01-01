@@ -1,4 +1,5 @@
 *[Võ Trí Thức - CTU](https://www.youtube.com/playlist?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)*
+
 ## day 1 (22/12/2021)
 - [X] [Bài 1: Biểu diễn đơn đồ thị vô hướng bằng "Ma trận Đỉnh - Đỉnh" - Phần 1/2](https://youtu.be/1JTc5TkwXJE?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
 
@@ -38,7 +39,7 @@
 - List neightbor(Graph *G, int x): x là đỉnh cần biết có bao nhiêu đỉnh láng giềng, giá trị trả về list các đỉnh láng giềng
 ```
 ## day 3 (27/12/2021)
-- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS) - Phần 1/6](https://youtu.be/Ej1Vc0fUXPM?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS - stack) - Phần 1/6](https://youtu.be/Ej1Vc0fUXPM?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
 ### Lý thuyết
 ```
 - Vai trò của duyệt đồ thị:
@@ -61,7 +62,7 @@ While (stack != empty){
 }
 ```
 ### day 4 (28/12/2021)
-- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS) - Phần 2/6](https://youtu.be/hBXzdzpTPeA?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS - stack) - Phần 2/6](https://youtu.be/hBXzdzpTPeA?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
 ### Lý thuyết
 ```
 - Dùng stack để duyệt
@@ -125,7 +126,7 @@ List depth_first_search(Graph *G, int x){
     }
 ```
 ### day 5 (29/12/2021)
-- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS) - Phần 3/6](https://youtu.be/OCCt6u1vR1I?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS - stack) - Phần 3/6](https://youtu.be/OCCt6u1vR1I?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
 ### Lý thuyết
 ```
 - Dùng list lưu đỉnh cha của đỉnh được duyệt
@@ -200,5 +201,47 @@ int main(){
         printf("%d %d\n",i,parent[i]);
     }
     fclose(file);
+}
+```
+
+### day 5 (1/1/2022)
+- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS - recursion) - Phần 4/6](https://youtu.be/5ACSZdTyziM?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+### Lý thuyết
+```
+	
+	int mark[Max_Vertices]; // bien global danh dau cac dinh duoc duyet
+	int parent[Max_Vertices]; // bien global luu parent cua moi dinh
+	void DFS_Recurion(Graph *G, int u, int p){
+		if(u đã duyệt)
+			return;
+		Duyệt u
+		Đánh dấu u đã duyệt
+		Cập nhật tra của u
+		List neightbors(u) = {v1, v2,...}
+		for(các đỉnh kề v của u){
+			DFS_Recursion(G,v,u);
+	}
+```
+### Hàm
+```
+- void DFS_Recurion(Graph *G, int u, int p)
+```
+### Important Code
+```
+void DFS_Recursion(Graph *G, int u, int p){
+	// Kiem tra u duyet chua
+	if(mark[u]==1) return;
+	// Danh dau u duoc duyet	
+	mark[u]=1;
+	// Cap nhat cha cua u
+	parent[u]=p;
+	int i;
+	// lay danh sach lang gieng list cua u
+	List list = neighbors(G, u);
+	for(i=1; i<=list.size; i++){
+		int v = element_at(&list,i);
+	// goi de quy cac lang gieng v cua u
+		DFS_Recursion(G, v, u);
+	}
 }
 ```
