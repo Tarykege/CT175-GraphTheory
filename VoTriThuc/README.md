@@ -208,19 +208,18 @@ int main(){
 - [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS - recursion) - Phần 4/6](https://youtu.be/5ACSZdTyziM?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
 ### Lý thuyết
 ```
-	
-	int mark[Max_Vertices]; // bien global danh dau cac dinh duoc duyet
-	int parent[Max_Vertices]; // bien global luu parent cua moi dinh
-	void DFS_Recurion(Graph *G, int u, int p){
-		if(u đã duyệt)
-			return;
-		Duyệt u
-		Đánh dấu u đã duyệt
-		Cập nhật tra của u
-		List neightbors(u) = {v1, v2,...}
-		for(các đỉnh kề v của u){
-			DFS_Recursion(G,v,u);
-	}
+int mark[Max_Vertices]; // bien global danh dau cac dinh duoc duyet
+int parent[Max_Vertices]; // bien global luu parent cua moi dinh
+void DFS_Recurion(Graph *G, int u, int p){
+	if(u đã duyệt)
+		return;
+	Duyệt u
+	Đánh dấu u đã duyệt
+	Cập nhật tra của u
+	List neightbors(u) = {v1, v2,...}
+	for(các đỉnh kề v của u){
+		DFS_Recursion(G,v,u);
+}
 ```
 ### Hàm
 ```
