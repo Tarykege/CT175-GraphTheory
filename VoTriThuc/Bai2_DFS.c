@@ -93,13 +93,14 @@ int top(Stack *S){
     return S->data[S->size];
 }
 // duyet do thi dinh x theo chieu sau
-List depth_first_search(Graph *G, int x){
+List depth_first_search(Graph *G, int x, int parent[]){
     List list_dfs; // luu cac dinh duoc duyet tu dinh x
     make_nullList(&list_dfs);
     Stack S;
     int u,i;
     make_nullStack(&S);
     push(&S,x);
+    parent[x]=0;
     // tao list de danh dau dinh duoc duyet
     int mark[Max_Vertices]; //do dai cua mark == so luong dinh
     for(i=1; i<=G->n; i++){//khoi tao cac dinh la chua danh dau
@@ -115,7 +116,11 @@ List depth_first_search(Graph *G, int x){
         List u_neightbors=neightbors(G,u); //luu list cac phan tu lang gieng cua u
         for(i=1; i<=u_neightbors.size; i++){
             int v = element_at(&u_neightbors,i);
-            if(mark[v]==0) push(&S,v);
+            if(mark[v]==0){
+            	parent[v]=u;
+            	push(&S,v);
+			}
+            
         }
     }
     return list_dfs;
@@ -133,18 +138,23 @@ int main(){
     }
     // tao list luu tat ca cac dinh duoc danh dau chua
     int mark_dfs[Max_Vertices];
+    int parent[Max_Vertices];
     for(i=1; i<=G.n; i++){
         mark_dfs[i]=0;
+        parent[i]=0;
     }
+    
     //Duyet tat ca cac dinh ke ca dinh chua duoc danh dau
-    for(i = 1; i<=G.n; i++){
+    for(i=1; i<=G.n; i++){
         if(mark_dfs[i]==0){
-            List list_v = depth_first_search(&G,i);
+            List list_v = depth_first_search(&G,i,parent);
             for(j=1; j<=list_v.size; j++){
-                printf("%d\n",list_v.data[j-1]);
                 mark_dfs[list_v.data[j-1]]=1;
             }
         }
+    }
+    for(i=1; i<=G.n; i++){
+        printf("%d %d\n",i,parent[i]);
     }
     fclose(file);
 }

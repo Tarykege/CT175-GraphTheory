@@ -75,7 +75,7 @@ While (stack != empty){
 	void push_stack(Stack *stack, int x): thêm phần tử vào stack
 	int top(Stack *S): lấy giá trị phần tử trong stack
 	void pop(Stack *S): xóa phần tử trong stack
-	void depth_first_search(Graph *G): duyệt đồ thị theo chiều sâu
+	void depth_first_search(Graph *G, int x): duyệt đồ thị theo chiều sâu
 		int mark[MAX_VERTICES]: đánh dấu, lưu các đỉnh được duyệt
 ```
 ### Important Code
@@ -89,7 +89,7 @@ List depth_first_search(Graph *G, int x){
     push(&S,x);
     // tao list de danh dau dinh duoc duyet
     int mark[Max_Vertices]; //do dai cua mark == so luong dinh
-    for(i=1; i<G->n; i++){//khoi tao cac dinh la chua danh dau
+    for(i=1; i<=G->n; i++){//khoi tao cac dinh la chua danh dau
         mark[i]=0;
     }
     // thuc hien duyet do thi
@@ -114,13 +114,91 @@ List depth_first_search(Graph *G, int x){
         mark_dfs.data[i]=0;
     }
     //Duyet tat ca cac dinh ke ca dinh chua duoc danh dau
-    for(i = 1; i<G.n; i++){
+    for(i = 1; i<=G.n; i++){
         if(mark_dfs.data[i]==0){
             List list_v = depth_first_search(&G,i);
             for(j=1; j<=list_v.size; j++){
                 printf("Duyet %d\n",list_v.data[j-1]);
-                mark_dfs.data[j]=1;
+                mark_dfs.data[list_v.data[j-1]]=1;
             }
         }
     }
+```
+### day 5 (29/12/2021)
+- [X] [Bài 2- Lý thuyết đồ thị - Duyệt đồ thị theo chiều sâu (Thuật toán DFS) - Phần 3/6](https://youtu.be/OCCt6u1vR1I?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+### Lý thuyết
+```
+- Dùng list lưu đỉnh cha của đỉnh được duyệt
+```
+### Hàm
+```
+	void depth_first_search(Graph *G, int x, int parent[]): duyệt đồ thị theo chiều sâu
+```
+### Important Code
+```
+List depth_first_search(Graph *G, int x, int parent[]){
+    List list_dfs; // luu cac dinh duoc duyet tu dinh x
+    make_nullList(&list_dfs);
+    Stack S;
+    int u,i;
+    make_nullStack(&S);
+    push(&S,x);
+    parent[x]=0;
+    // tao list de danh dau dinh duoc duyet
+    int mark[Max_Vertices]; //do dai cua mark == so luong dinh
+    for(i=1; i<=G->n; i++){//khoi tao cac dinh la chua danh dau
+        mark[i]=0;
+    }
+    // thuc hien duyet do thi
+    while(!empty_stack(&S)){
+        u=top(&S);
+        pop(&S);
+        if(mark[u]==1) continue;
+        mark[u]=1;
+        push_back(&list_dfs,u);
+        List u_neightbors=neightbors(G,u); //luu list cac phan tu lang gieng cua u
+        for(i=1; i<=u_neightbors.size; i++){
+            int v = element_at(&u_neightbors,i);
+            if(mark[v]==0){
+            	parent[v]=u;
+            	push(&S,v);
+			}
+        }
+    }
+    return list_dfs;
+}
+-----main-----
+int main(){
+    FILE *file = freopen("input2.txt","r",stdin);
+    int n,m,u,v,i,j;
+    scanf("%d%d",&n,&m);
+    // khoi tao do thi
+    Graph G;
+    init_Graph(&G,n);
+    for(i=1; i<=m; i++){
+        scanf("%d%d",&u,&v);
+        add_edge(&G,u,v);
+    }
+    // tao list luu tat ca cac dinh duoc danh dau chua
+    int mark_dfs[Max_Vertices];
+    int parent[Max_Vertices];
+    for(i=1; i<=G.n; i++){
+        mark_dfs[i]=0;
+        parent[i]=0;
+    }
+    
+    //Duyet tat ca cac dinh ke ca dinh chua duoc danh dau
+    for(i=1; i<=G.n; i++){
+        if(mark_dfs[i]==0){
+            List list_v = depth_first_search(&G,i,parent);
+            for(j=1; j<=list_v.size; j++){
+                mark_dfs[list_v.data[j-1]]=1;
+            }
+        }
+    }
+    for(i=1; i<=G.n; i++){
+        printf("%d %d\n",i,parent[i]);
+    }
+    fclose(file);
+}
 ```
