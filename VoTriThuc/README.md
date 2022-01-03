@@ -76,11 +76,12 @@ While (stack != empty){
 	void push_stack(Stack *stack, int x): thêm phần tử vào stack
 	int top(Stack *S): lấy giá trị phần tử trong stack
 	void pop(Stack *S): xóa phần tử trong stack
-	void depth_first_search(Graph *G, int x): duyệt đồ thị theo chiều sâu
+	List depth_first_search(Graph *G, int x): duyệt đồ thị theo chiều sâu
 		int mark[MAX_VERTICES]: đánh dấu, lưu các đỉnh được duyệt
 ```
 ### Important Code
 ```
+// -------------DFS--------------- //
 List depth_first_search(Graph *G, int x){
     List list_dfs; // luu cac dinh duoc duyet tu dinh x
     make_nullList(&list_dfs);
@@ -108,7 +109,7 @@ List depth_first_search(Graph *G, int x){
     }
     return list_dfs;
 }
------main-----
+// -------------MAIN--------------- //
 // tao list luu tat ca cac dinh duoc danh dau chua
     List mark_dfs;
     for(i=1; i<G.n; i++){
@@ -133,10 +134,11 @@ List depth_first_search(Graph *G, int x){
 ```
 ### Hàm
 ```
-- void depth_first_search(Graph *G, int x, int parent[]): duyệt đồ thị theo chiều sâu
+- List depth_first_search(Graph *G, int x, int parent[]): duyệt đồ thị theo chiều sâu
 ```
 ### Important Code
 ```
+// -------------DFS--------------- //
 List depth_first_search(Graph *G, int x, int parent[]){
     List list_dfs; // luu cac dinh duoc duyet tu dinh x
     make_nullList(&list_dfs);
@@ -168,7 +170,7 @@ List depth_first_search(Graph *G, int x, int parent[]){
     }
     return list_dfs;
 }
------main-----
+// -------------MAIN--------------- //
 int main(){
     FILE *file = freopen("input2.txt","r",stdin);
     int n,m,u,v,i,j;
@@ -250,4 +252,127 @@ for(i=1; i<=G.n; i++){
 			DFS_Recursion(&G,i,0);
 		}
 }
+```
+
+### day 7 (3/1/2022)
+- [X] [Bài 3- Lý thuyết đồ thị - Duyệt đồ thị theo chiều rộng (Thuật toán BFS) - Phần 1/2](https://youtu.be/Duwqh4gGFbs?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+- [X] [Bài 3- Lý thuyết đồ thị - Duyệt đồ thị theo chiều rộng (Thuật toán BFS) - Phần 2/2](https://youtu.be/1GFWuzYrOYI?list=PLQR5IJqntFProvKkCOpoNOdkal-nh6yqB)
+### Lý thuyết
+```
+Đưa 1 đỉnh x bất kỳ vào hàng đợi
+While(Queue !empty){
+	u = front(Queue);
+	if(u đã duyệt)	continue;
+	Duyệt u;
+	Đánh dấu u đã duyệt
+	for(các đỉnh kề v của u)
+		if(v chưa được duyệt)
+			đưa v vào hàng đợi
+}
+```
+### Hàm
+```
+- void make_nullQueue(Queue *Q)
+- int empty_Queue(Queue *Q)
+- int full_Queue(Queue *Q)
+- int front(Queue *Q)
+- void enQueue(Queue *Q, int x)
+- void deQueue(Queue *Q)
+- List BFS(Graph *G, int x, int parent[])
+- for(i=1; i<=nbor.size; i++){
+			int v = element_at(&nbor,i);
+			if(mark[v]==0){
+				enQueue(&Q,v);
+				if(parent[v]==-1){
+					parent[v]=u;
+				}
+			}
+		}
+```
+### Important Code
+```
+// -------------QUEUE--------------- //
+// lam rong va khoi tao hang doi
+void make_nullQueue(Queue *Q){
+	Q->front=-1;
+	Q->rear=-1;
+}
+// kiem tra hang doi rong
+int empty_Queue(Queue *Q){
+	return Q->rear==-1;
+}
+// kiem tra hang doi day
+int full_Queue(Queue *Q){
+	return (Q->rear-Q->front+1)%Max_Element==0;	
+}
+// lay gia tri phan tu thu front
+int front(Queue *Q){
+	if(empty_Queue(Q)){
+		printf("Queue is empty\n");
+	}
+	else return Q->data[Q->front];
+}
+// them phan tu vao hang doi
+void enQueue(Queue *Q, int x){
+	if(!full_Queue(Q)){
+		if(empty_Queue(Q)) Q->front=0;
+		Q->rear=(Q->rear+1)%Max_Element;
+		Q->data[Q->rear]=x;
+	} else printf("error\n");
+}
+// xoa phan tu khoi hang doi
+void deQueue(Queue *Q){
+	if(!empty_Queue(Q)){
+		if(Q->front==Q->rear) make_nullQueue(Q);
+		else Q->front=(Q->front+1)%Max_Element;
+	} else printf("error\n");
+}
+// -------------BFS--------------- //
+List BFS(Graph *G, int x, int parent[]){
+	List L_BFS;
+	make_nullList(&L_BFS);
+	Queue Q;
+	make_nullQueue(&Q);
+	enQueue(&Q,x);
+	parent[x]=0;
+	int mark[Max_Vertices],i,u;
+	for(i=1; i<=G->n; i++){
+		mark[i]=0;
+	}
+	while(!empty_Queue(&Q)){
+		u=front(&Q);
+		deQueue(&Q);
+		if(mark[u]==1){
+			continue;
+		}
+		mark[u]=1;
+		push_back(&L_BFS,u);
+		List nbor = neighbors(G,u);
+		for(i=1; i<=nbor.size; i++){
+			int v = element_at(&nbor,i);
+			if(mark[v]==0){
+				enQueue(&Q,v);
+				if(parent[v]==-1){
+					parent[v]=u;
+				}
+			}
+		}
+	}
+	return L_BFS;
+}
+// -------------MAIN--------------- //
+int parent[Max_Vertices],mark[Max_Vertices];
+	for(i=1; i<=G.n; i++){
+		parent[i]=-1;
+		mark[i]=0;
+	}
+	for(i=1; i<=G.n; i++){
+		if(mark[i]==0){
+			List L_BFS = BFS(&G,i,parent);
+			for(j=1; j<=L_BFS.size; j++){
+				int v = element_at(&L_BFS,j);
+				mark[v]=1;
+			}
+		}
+	}
 ```
