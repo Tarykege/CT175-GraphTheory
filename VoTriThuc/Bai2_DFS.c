@@ -141,7 +141,7 @@ int main(){
     int parent[Max_Vertices];
     for(i=1; i<=G.n; i++){
         mark_dfs[i]=0;
-        parent[i]=0;
+        parent[i]=-1;
     }
     
     // Duyet do thi khong lien thong

@@ -187,7 +187,7 @@ int main(){
     int parent[Max_Vertices];
     for(i=1; i<=G.n; i++){
         mark_dfs[i]=0;
-        parent[i]=0;
+        parent[i]=-1;
     }
     
     //Duyet tat ca cac dinh ke ca dinh chua duoc danh dau
