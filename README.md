@@ -3,4 +3,6 @@
 ## Representing Graphs
 
 - [X] Ma trận đỉnh - đỉnh
-- [X] Duyệt ma trận đỉnh - đỉnh bằng depth first search
+- [X] Duyệt ma trận đỉnh - đỉnh bằng depth-first search
+- [X] Duyệt ma trận đỉnh - đỉnh bằng breadth-first search
+- [X] Ma trận đỉnh - cung
