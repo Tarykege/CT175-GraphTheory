@@ -34,7 +34,7 @@ int degree(Graph *G, int x){
 	return c;
 }
 int main(){
-	FILE *file = freopen("Matran_Dinh_Cung.txt","r",stdin);
+	FILE *file = freopen("Matran_Dinh_Cung2.txt","r",stdin);
 	int i,j,n,m,u,v;
 	Graph G;
 	scanf("%d%d",&n,&m);
