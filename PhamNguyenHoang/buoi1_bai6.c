@@ -73,11 +73,12 @@ int main() {
 	}
 	//liet ke danh sach cac dinh
 	for (v = 1; v <= n; v++) {
-	List list = neighbors(&G, v);
-	printf("Cac dinh ke cua %d: [", v);
-	for (i = 1; i <= list.size; i++)
-	printf("%d ", element_at(&list, i));
-	printf("]\n");
+		List list = neighbors(&G, v);
+		printf("Cac dinh ke cua %d: [", v);
+		for (i = 1; i <= list.size; i++)
+		printf("%d ", element_at(&list, i));
+		printf("]\n");
 	}
+	fclose(file);
 	return 0;
 }

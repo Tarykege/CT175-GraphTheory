@@ -39,4 +39,5 @@ int main(){
 	for(i=1; i<=G.n; i++){
 		printf("degree(%d) = %d\n",i,degree(&G,i));
 	}
+	fclose(file);
 }

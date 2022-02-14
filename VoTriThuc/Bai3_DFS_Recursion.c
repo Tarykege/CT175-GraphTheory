@@ -138,5 +138,5 @@ int main(){
 		printf("%d %d\n",i,parent[i]);
 	}
 	fclose(file);
-   return 0;
+   	return 0;
 }
