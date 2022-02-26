@@ -95,7 +95,7 @@ int top(Stack *S){
 // Duyet do thi dinh x theo chieu sau
 List depth_first_search(Graph *G, int x, int parent[]){
     // danh sach luu cac dinh duoc duyet tu cua dinh x
-	List list_dfs; 
+    List list_dfs; 
     make_nullList(&list_dfs);
     Stack S;
     int u,i;
