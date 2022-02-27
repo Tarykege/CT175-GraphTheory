@@ -28,7 +28,7 @@ int degree(Graph *G, int x){
 int main(){
 	Graph G;
 	int n,m,u,v,i,j;
-	FILE* file = fopen("D:\\Study\\Code\\C\\GraphTheory-CT175\\PhamNguyenHoang\\Matran_Dinh_Dinh.txt","r");
+	FILE* file = fopen("D:\\Study\\Code\\C\\GraphTheory-CT175\\PhamNguyenHoang\\ThucHanh_buoi1_Matran_Dinh_Dinh.txt","r");
 	fscanf(file,"%d%d",&n,&m);
 	init_graph(&G,n);
 	for(i=1; i<=m; i++){
