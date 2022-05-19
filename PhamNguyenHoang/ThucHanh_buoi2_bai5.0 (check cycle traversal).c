@@ -84,7 +84,7 @@ int checkCycle(Graph *G){
 int main(){
 	int i,u,v,m,n;
 	Graph G;
-	FILE *file = freopen("D:\\Study\\Code\\C\\GraphTheory-CT175\\PhamNguyenHoang\\ThucHanh_buoi2_bai5.0.txt","r",stdin);
+	FILE *file = freopen("ThucHanh_buoi2_bai5.0.txt","r",stdin);
 	scanf("%d%d",&n,&m);
 	initGraph(&G,n);
 	for(i=1; i<=m; i++){

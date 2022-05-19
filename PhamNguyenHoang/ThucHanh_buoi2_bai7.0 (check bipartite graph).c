@@ -1,8 +1,6 @@
 #include<stdio.h>
 #define MAX_VERTICES 30
 #define MAX_LENGTH 30
-int color[MAX_VERTICES];
-int fail;
 typedef struct{
 	int A[MAX_VERTICES][MAX_VERTICES];
 	int n;
@@ -49,6 +47,8 @@ List neighbors(Graph *G, int x){
 int elementAt(List *l, int pos){
 	return l->data[pos-1];
 }
+int color[MAX_VERTICES];
+int fail;
 void colorize(Graph *G, int x, int c){
 	if(color[x]==-1){
 		color[x]=c;
